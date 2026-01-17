@@ -1,0 +1,81 @@
+# PoultryCaduceus MPRA Fine-tuning Configuration
+
+# Model configuration
+model:
+  # Base model
+  pretrained_path: "checkpoints/pretrain/best_model.pt"
+  
+  # Architecture (should match pretrained)
+  vocab_size: 6
+  d_model: 256
+  n_layers: 8
+  d_state: 64
+  d_conv: 4
+  expand: 2
+  max_seq_len: 512  # MPRA sequences are shorter
+  rc_equivariant: true
+  dropout: 0.1
+  
+  # MPRA head
+  head_hidden_dim: 256
+  head_dropout: 0.1
+  head_num_layers: 2
+
+# Data configuration
+data:
+  data_dir: "data/mpra"
+  train_file: "train.parquet"
+  val_file: "val.parquet"
+  test_file: "test.parquet"
+  
+  # Augmentation
+  augmentation:
+    reverse_complement: true
+    random_shift: 10
+    random_mutation: 0.0
+
+# Training configuration
+training:
+  output_dir: "checkpoints/mpra"
+  
+  # Optimization
+  backbone_lr: 1.0e-5
+  head_lr: 1.0e-4
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  
+  # Loss weights
+  mse_weight: 0.5
+  pearson_weight: 0.5
+  
+  # Backbone freezing
+  freeze_backbone: false
+  freeze_epochs: 0  # Freeze backbone for first N epochs
+  
+  # Schedule
+  scheduler: "reduce_on_plateau"
+  lr_factor: 0.5
+  lr_patience: 5
+  
+  # Training
+  num_epochs: 100
+  batch_size: 64
+  gradient_accumulation_steps: 1
+  
+  # Early stopping
+  early_stopping: true
+  early_stopping_patience: 15
+  early_stopping_metric: "val_pearson_r"
+  
+  # Mixed precision
+  mixed_precision: "bf16"
+  
+  # Data loading
+  num_workers: 4
+  pin_memory: true
+
+# Logging
+logging:
+  use_wandb: true
+  project_name: "PoultryCaduceus-MPRA"
+  run_name: null

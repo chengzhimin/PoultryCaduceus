@@ -1,0 +1,106 @@
+# PoultryCaduceus Pre-training Configuration
+# Based on Caduceus architecture for chicken genome (GRCg6a)
+
+# Model architecture (Caduceus-based)
+model:
+  # Use original Caduceus model from kuleshov-group
+  model_name: "caduceus-ps_seqlen-131k_d_model-256_n_layer-16"
+  
+  # Or custom configuration:
+  # vocab_size: 12  # Caduceus uses complement-aware vocabulary
+  # d_model: 256
+  # n_layers: 16
+  # d_state: 64
+  # d_conv: 4
+  # expand: 2
+  # max_seq_len: 131072  # 131k or 65k
+  # rc_equivariant: true
+  # complement_map: true  # Caduceus-specific
+  
+  # For smaller model (faster training):
+  # model_name: "caduceus-ph_seqlen-131k_d_model-256_n_layer-4"
+
+# Data configuration
+data:
+  # Data paths (relative to project root)
+  train_path: "data/pretrain/train.h5"
+  val_path: "data/pretrain/val.h5"
+  
+  # Or text format:
+  # train_path: "data/pretrain/train.txt"
+  # val_path: "data/pretrain/val.txt"
+  
+  # Sequence parameters (should match data preparation)
+  seq_length: 65536        # 65k bp
+  # seq_length: 131072     # 131k bp (if using longer model)
+  
+  # Masking for MLM
+  mask_ratio: 0.15
+  mask_strategy: "random"  # or "span"
+  span_length: 6
+  
+  # Data augmentation
+  rc_augmentation: true    # Reverse complement augmentation
+
+# Training configuration
+training:
+  output_dir: "checkpoints/pretrain"
+  
+  # Optimization
+  learning_rate: 1.0e-4
+  weight_decay: 0.01
+  adam_beta1: 0.9
+  adam_beta2: 0.999
+  adam_epsilon: 1.0e-8
+  max_grad_norm: 1.0
+  
+  # Learning rate schedule
+  scheduler: "cosine"
+  warmup_steps: 1000
+  warmup_ratio: 0.01
+  
+  # Training duration
+  num_epochs: 10
+  max_steps: 100000  # Or use max_steps instead of epochs
+  
+  # Batch size
+  batch_size: 8              # Per GPU
+  gradient_accumulation_steps: 4
+  # Effective batch size = batch_size * gradient_accumulation * num_gpus
+  
+  # Mixed precision
+  mixed_precision: "bf16"    # "no", "fp16", "bf16"
+  
+  # Checkpointing
+  save_steps: 5000
+  save_total_limit: 3        # Keep only last N checkpoints
+  eval_steps: 1000
+  logging_steps: 100
+  
+  # Data loading
+  num_workers: 4
+  pin_memory: true
+  
+  # Distributed training
+  # For multi-GPU: use torchrun --nproc_per_node=N
+
+# Hardware recommendations
+# - H100/H200: batch_size=16, gradient_accumulation=2
+# - A100 80GB: batch_size=8, gradient_accumulation=4
+# - A100 40GB: batch_size=4, gradient_accumulation=8
+# - RTX 4090: batch_size=2, gradient_accumulation=16
+
+# Logging
+logging:
+  use_wandb: true
+  project_name: "PoultryCaduceus-Pretrain"
+  run_name: null  # Auto-generated if null
+  log_model: false
+
+# Genome information (for reference)
+genome:
+  assembly: "GRCg6a"
+  species: "Gallus gallus"
+  source: "Ensembl Release 104"
+  total_length: "~1.1 Gb"
+  chromosomes: "1-33, W, Z, MT"

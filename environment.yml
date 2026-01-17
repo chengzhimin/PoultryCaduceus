@@ -1,0 +1,64 @@
+# PoultryCaduceus Conda Environment
+# Create with: conda env create -f environment.yml
+# Activate with: conda activate poultry-caduceus
+
+name: poultry-caduceus
+
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+
+dependencies:
+  # Python
+  - python=3.10
+  
+  # PyTorch with CUDA
+  - pytorch>=2.0
+  - pytorch-cuda=12.1
+  - torchvision
+  - torchaudio
+  
+  # Scientific computing
+  - numpy>=1.24
+  - pandas>=2.0
+  - scipy>=1.10
+  - scikit-learn>=1.2
+  
+  # Bioinformatics
+  - biopython>=1.81
+  
+  # Data formats
+  - pyarrow>=12.0
+  - h5py>=3.8
+  
+  # Visualization
+  - matplotlib>=3.7
+  - seaborn>=0.12
+  
+  # Utilities
+  - tqdm>=4.65
+  - pyyaml>=6.0
+  - requests>=2.28
+  
+  # Development
+  - jupyter
+  - ipykernel
+  - black
+  - isort
+  - flake8
+  - pytest
+  - pytest-cov
+  
+  # Pip packages
+  - pip
+  - pip:
+    - transformers>=4.30.0
+    - einops>=0.6.0
+    - safetensors>=0.3.0
+    - wandb>=0.15.0
+    - accelerate>=0.20.0
+    # Mamba (requires separate installation with CUDA)
+    # - mamba-ssm>=1.2.0
+    # - causal-conv1d>=1.1.0

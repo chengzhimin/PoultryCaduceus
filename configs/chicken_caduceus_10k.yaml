@@ -1,0 +1,29 @@
+# PoultryCaduceus 10000 steps training configuration
+# Optimized for 4x H200 (80GB)
+
+model:
+  pretrained_model: ./caduceus-ph-model
+
+data:
+  train_path: chicken_pretrain_data_GRCg6a/train_65k.h5
+  val_path: chicken_pretrain_data_GRCg6a/val_65k.h5
+  seq_length: 65536
+  batch_size: 6
+  num_workers: 8
+  mlm_probability: 0.15
+  rc_aug: true
+
+training:
+  output_dir: outputs/chicken_caduceus_10k
+  max_steps: 10000
+  warmup_steps: 500
+  gradient_accumulation_steps: 2
+  max_grad_norm: 1.0
+  bf16: true
+  log_interval: 50
+  eval_interval: 500
+  save_interval: 1000
+
+optimizer:
+  lr: 2e-4
+  weight_decay: 0.01
