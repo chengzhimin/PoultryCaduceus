@@ -204,7 +204,61 @@ optimizer:
 - **Regulatory Element Annotation**: Identify enhancers, promoters, etc.
 
 ---
+eQTL Fine-tuning Results
+Fine-tuning on ChickenGTEx eQTL data (50,045 training samples, 12,511 validation samples):
 
+Training Configuration
+Parameter	Value
+Batch size	32
+Learning rate	5e-5
+Epochs	10
+Sequence length	10,240 bp
+Mixed precision	bf16
+Optimizer	AdamW
+Performance Metrics
+Epoch	Train Loss	Val Loss	AUROC	AUPRC	Accuracy	F1
+1	0.6830	0.6696	0.6206	0.5744	0.5861	0.6803
+2	0.6609	0.6745	0.6338	0.5842	0.5948	0.5931
+3	0.6454	0.6509	0.6437	0.5906	0.6127	0.6775
+4	0.6251	0.6506	0.6506	0.5969	0.6177	0.6686
+5	0.6016	0.6646	0.6559	0.6041	0.6177	0.6408
+6	0.5746	0.6589	0.6582	0.6073	0.6267	0.6678
+7	0.5468	0.6812	0.6633	0.6105	0.6326	0.6713
+8	0.5224	0.6954	0.6605	0.6046	0.6298	0.6608
+9	0.5036	0.7095	0.6630	0.6096	0.6315	0.6668
+10	0.4926	0.7110	0.6628	0.6096	0.6317	0.6686
+Best Model (Epoch 7):
+
+AUROC: 0.6633
+AUPRC: 0.6105
+Accuracy: 63.26%
+Training Curves
+Training Curves
+
+Data Format
+Input HDF5 Format
+
+# HDF5 file structure
+{
+    'sequences': (N, seq_length) int8,  # DNA sequences
+    'labels': (N,) int8,                 # Labels (1=QTL, 0=non-QTL)
+}
+
+# Attributes
+{
+    'seq_length': 10240,
+    'encoding': 'caduceus_compatible',
+    'encoding_map': 'A=7, C=8, G=9, T=10, N=5',
+    'genome': 'GRCg6a'
+}
+Sequence Encoding (Caduceus Compatible)
+Nucleotide	Code
+A	7
+C	8
+G	9
+T	10
+N	5
+Project Structure
 ## 📜 License
 
 MIT License
