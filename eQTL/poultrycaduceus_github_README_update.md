@@ -114,7 +114,7 @@ Fine-tuning on ChickenGTEx eQTL data (50,045 training samples, 12,511 validation
 
 ### Training Curves
 
-![Training Curves](eqtl_training_curves.png)
+![Training Curves](eQTL/poultrycaduceus_github_eqtl_training_curves.svg)
 
 ## Data Format
 
