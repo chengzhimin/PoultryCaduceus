@@ -114,7 +114,7 @@ Fine-tuning on ChickenGTEx eQTL data (50,045 training samples, 12,511 validation
 
 ### Training Curves
 
-![Training Curves](figures/eqtl_training_curves.png)
+![Training Curves](eqtl_training_curves.png)
 
 ## Data Format
 
@@ -178,24 +178,3 @@ PoultryCaduceus/
 | eQTL/sQTL/exQTL/lncQTL/3'aQTL | ChickenGTEx | [Zenodo](https://zenodo.org/records/14902956) |
 | GWAS | ChickenGTEx | [Website](http://chickengtex.farmgtex.org) |
 
-## Citation
-
-If you use PoultryCaduceus in your research, please cite:
-
-```bibtex
-@article{poultrycaduceus2025,
-  title={PoultryCaduceus: A DNA Foundation Model for Poultry Genomics},
-  author={Cheng, Zhimin and others},
-  year={2025}
-}
-```
-
-## Acknowledgments
-
-- [Caduceus](https://github.com/kuleshov-group/caduceus) - The base architecture
-- [ChickenGTEx](http://chickengtex.farmgtex.org) - QTL data source
-- [Mamba](https://github.com/state-spaces/mamba) - State space model implementation
-
-## License
-
-MIT License
