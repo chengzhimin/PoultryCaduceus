@@ -2,7 +2,7 @@
 
 **A Bidirectional DNA Language Model for Chicken Genome**
 
-PoultryCaduceus is the first DNA foundation model specifically pre-trained on the chicken (*Gallus gallus*) genome, based on the [Caduceus](https://github.com/kuleshov-group/caduceus) architecture.
+PoultryCaduceus is the DNA foundation model specifically pre-trained on the chicken (*Gallus gallus*) genome, based on the [Caduceus](https://github.com/kuleshov-group/caduceus) architecture.
 
 ## ✨ Features
 
